@@ -1,0 +1,21 @@
+{
+  "name": "M-Okoa Agent",
+  "short_name": "M-Okoa",
+  "description": "AI-powered M-Pesa financial co-pilot for Kenyan micro-entrepreneurs",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "background_color": "#0A0F0D",
+  "theme_color": "#00D664",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/mokoa-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["finance", "productivity", "utilities"],
+  "lang": "sw",
+  "dir": "ltr"
+}

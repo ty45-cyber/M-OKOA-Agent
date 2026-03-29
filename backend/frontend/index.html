@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- ── Favicon ─────────────────────────────────────────── -->
+    <link rel="icon" type="image/svg+xml" href="/mokoa-icon.svg" />
+    <link rel="apple-touch-icon" href="/mokoa-icon.svg" />
+
+    <!-- ── Theme colour (browser chrome on mobile) ────────── -->
+    <meta name="theme-color" content="#0A0F0D" />
+
+    <!-- ── SEO & social ────────────────────────────────────── -->
+    <meta name="description" content="M-Okoa Agent — Your AI-powered M-Pesa financial co-pilot. Built on Daraja 3.0 for Kenyan micro-entrepreneurs, cooperatives, students, and Chamas." />
+    <meta name="keywords"    content="M-Pesa, Daraja, M-Okoa, Kenya, fintech, agent, SACCO, Chama, KRA, STK Push" />
+    <meta name="author"      content="M-Okoa Agent" />
+    <meta name="robots"      content="noindex, nofollow" />
+
+    <!-- ── Open Graph ──────────────────────────────────────── -->
+    <meta property="og:type"        content="website" />
+    <meta property="og:title"       content="M-Okoa Agent — M-Pesa Financial Co-pilot" />
+    <meta property="og:description" content="Manage tills, pay bills, move float, and stay KRA-compliant — all from one intelligent dashboard." />
+    <meta property="og:image"       content="/mokoa-icon.svg" />
+
+    <!-- ── PWA manifest ────────────────────────────────────── -->
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- ── Google Fonts ────────────────────────────────────── -->
+    <!--
+      Syne        → display headings (bold, geometric, distinctly African-tech)
+      DM Sans     → body text (clean, readable at small sizes)
+      JetBrains Mono → numbers, code, mono labels (financial data)
+
+      display=swap ensures text is visible while fonts load.
+      preconnect cuts DNS + TLS handshake time for both origins.
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- ── Critical inline styles ──────────────────────────── -->
+    <!--
+      Painted before any JS loads.
+      Prevents flash of white background (FOUC) on page load.
+      Body background and colour must match globals.css exactly.
+    -->
+    <style>
+      /* Prevent FOUC — matches globals.css :root and body */
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      html {
+        font-size: 16px;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      body {
+        background-color: #0A0F0D;
+        color: #E8F0EC;
+        font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      /* Full-screen loading state shown before React mounts */
+      #root-loader {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: #0A0F0D;
+        gap: 16px;
+        z-index: 9999;
+      }
+
+      #root-loader .loader-logo {
+        width: 48px;
+        height: 48px;
+        background: #00D664;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Syne', sans-serif;
+        font-weight: 800;
+        font-size: 22px;
+        color: #0A0F0D;
+        animation: loader-pulse 1.6s ease-in-out infinite;
+      }
+
+      #root-loader .loader-text {
+        font-family: 'Syne', sans-serif;
+        font-weight: 700;
+        font-size: 18px;
+        letter-spacing: -0.02em;
+        color: #E8F0EC;
+      }
+
+      #root-loader .loader-sub {
+        font-size: 12px;
+        color: #4A5E54;
+        letter-spacing: 0.06em;
+        font-family: monospace;
+      }
+
+      #root-loader .loader-bar {
+        width: 120px;
+        height: 2px;
+        background: #243028;
+        border-radius: 999px;
+        overflow: hidden;
+        margin-top: 8px;
+      }
+
+      #root-loader .loader-bar-inner {
+        height: 100%;
+        width: 40%;
+        background: #00D664;
+        border-radius: 999px;
+        animation: loader-slide 1.2s ease-in-out infinite;
+      }
+
+      @keyframes loader-pulse {
+        0%, 100% { transform: scale(1);    opacity: 1; }
+        50%       { transform: scale(0.92); opacity: 0.8; }
+      }
+
+      @keyframes loader-slide {
+        0%   { transform: translateX(-100%); }
+        50%  { transform: translateX(200%); }
+        100% { transform: translateX(200%); }
+      }
+
+      /* Hide loader once React mounts — JS removes #root-loader */
+      #root:not(:empty) + #root-loader,
+      #root-loader.hidden {
+        display: none !important;
+      }
+    </style>
+
+    <title>M-Okoa Agent</title>
+  </head>
+
+  <body>
+    <!-- ── React mount point ──────────────────────────────── -->
+    <div id="root"></div>
+
+    <!-- ── Pre-React loading screen ──────────────────────── -->
+    <!--
+      Shown while Vite chunks download and React bootstraps.
+      Removed by the inline script below once #root has children.
+      On fast connections this flickers for < 100ms.
+    -->
+    <div id="root-loader" aria-hidden="true">
+      <div class="loader-logo">M</div>
+      <div class="loader-text">M-Okoa Agent</div>
+      <div class="loader-sub">DARAJA 3.0 · LOADING</div>
+      <div class="loader-bar">
+        <div class="loader-bar-inner"></div>
+      </div>
+    </div>
+
+    <!-- ── Remove loader once React hydrates ─────────────── -->
+    <script>
+      (function () {
+        var observer = new MutationObserver(function () {
+          var root = document.getElementById('root')
+          if (root && root.children.length > 0) {
+            var loader = document.getElementById('root-loader')
+            if (loader) {
+              loader.classList.add('hidden')
+            }
+            observer.disconnect()
+          }
+        })
+        observer.observe(document.getElementById('root'), { childList: true })
+      })()
+    </script>
+
+    <!-- ── Vite entry point ───────────────────────────────── -->
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

@@ -1,0 +1,46 @@
+# ── Web Framework ──────────────────────────────────────────
+fastapi==0.115.5
+uvicorn[standard]==0.32.1
+python-multipart==0.0.12
+
+# ── Database ───────────────────────────────────────────────
+SQLAlchemy==2.0.36
+aiomysql==0.2.0
+alembic==1.14.0
+
+# ── Auth & Security ────────────────────────────────────────
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+cryptography==43.0.3
+
+# ── Redis (agent state, rate limiting, token cache) ────────
+redis[hiredis]==5.2.0
+
+# ── HTTP Client (Daraja API calls) ─────────────────────────
+httpx==0.28.0
+
+# ── LangGraph Agent ────────────────────────────────────────
+langgraph==0.2.60
+langchain-anthropic==0.3.0
+langchain-core==0.3.24
+anthropic==0.40.0
+
+# ── Telegram Bot ───────────────────────────────────────────
+python-telegram-bot==21.9
+
+# ── Africa's Talking (SMS) ─────────────────────────────────
+africastalking==1.2.7
+
+# ── Validation & Config ────────────────────────────────────
+pydantic==2.10.3
+pydantic-settings==2.6.1
+python-dotenv==1.0.1
+ulid-py==1.1.0
+
+# ── Logging ────────────────────────────────────────────────
+structlog==24.4.0
+
+# ── Testing ────────────────────────────────────────────────
+pytest==8.3.4
+pytest-asyncio==0.24.0
+httpx==0.28.0
